@@ -1,0 +1,79 @@
+import React, { useState } from 'react';
+import './App.css';
+
+function App() {
+  const [students, setStudents] = useState([
+    { roll: '20MH1A1230', a1: false, a2: false, cert: false, remarks: '' },
+    { roll: '20MH1A1231', a1: false, a2: false, cert: false, remarks: '' },
+    { roll: '20MH1A1232', a1: false, a2: false, cert: false, remarks: '' },
+    { roll: '20MH1A1233', a1: false, a2: false, cert: false, remarks: '' },
+  ]);
+
+  const handleChange = (index, field, value) => {
+    const updated = [...students];
+    updated[index][field] = value;
+    setStudents(updated);
+  };
+
+  const handleSubmit = () => {
+    console.log("Submitted Data:", students);
+    alert("Submitted! Check console for data.");
+    // You can send the data to backend here (e.g., via fetch/axios)
+  }; 
+
+  return (
+    <div className="App">
+      <h2>AI & MI Section</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Roll No.</th>
+            <th>Assignment 1</th>
+            <th>Assignment 2</th>
+            <th>Certificate</th>
+            <th>Remarks</th>
+          </tr>
+        </thead>
+        <tbody>
+          {students.map((s, index) => (
+            <tr key={index}>
+              <td>{s.roll}</td>
+              <td>
+                <input
+                  type="checkbox"
+                  checked={s.a1}
+                  onChange={(e) => handleChange(index, 'a1', e.target.checked)}
+                />
+              </td>
+              <td>
+                <input
+                  type="checkbox"
+                  checked={s.a2}
+                  onChange={(e) => handleChange(index, 'a2', e.target.checked)}
+                />
+              </td>
+              <td>
+                <input
+                  type="checkbox"
+                  checked={s.cert}
+                  onChange={(e) => handleChange(index, 'cert', e.target.checked)}
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  value={s.remarks}
+                  onChange={(e) => handleChange(index, 'remarks', e.target.value)}
+                  placeholder="Enter remarks"
+                />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <button className="submit-button" onClick={handleSubmit}>Submit</button>
+    </div>
+  );
+}
+
+export default App;
